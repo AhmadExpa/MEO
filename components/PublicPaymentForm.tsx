@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { formatInterval, formatUsd, parseAmountToCents } from "@/lib/amount";
-import ClientSecurityDetails from "@/components/ClientSecurityDetails";
 import {
   PUBLIC_PAYMENT_MAX_CENTS,
   PUBLIC_PAYMENT_MIN_CENTS,
@@ -12,14 +11,7 @@ import {
   type PublicPaymentMode,
 } from "@/lib/public-payment";
 
-type PublicPaymentFormProps = {
-  clientContext: {
-    ipAddress: string;
-    location: string;
-  };
-};
-
-export default function PublicPaymentForm({ clientContext }: PublicPaymentFormProps) {
+export default function PublicPaymentForm() {
   const [mode, setMode] = useState<PublicPaymentMode>("one_time");
   const [selectedAmount, setSelectedAmount] = useState(String(PUBLIC_PAYMENT_PRESETS[0].amountCents));
   const [customAmount, setCustomAmount] = useState("");
@@ -80,7 +72,6 @@ export default function PublicPaymentForm({ clientContext }: PublicPaymentFormPr
           <h2>Make a payment</h2>
           <p className="muted small">Choose an amount and continue to Stripe’s secure payment page.</p>
         </div>
-        <span className="pill">USD · Secure</span>
       </div>
 
       <div className="payment-choice-grid">
@@ -182,22 +173,11 @@ export default function PublicPaymentForm({ clientContext }: PublicPaymentFormPr
         </div>
       ) : null}
 
-      <div className="privacy-notice">
-        <div className="privacy-notice-icon" aria-hidden="true">✓</div>
-        <div>
-          <strong>Stripe security check</strong>
-          <p>Stripe may use your IP-derived location, browser/device signals, billing details, card information, and bank authentication to assess this payment.</p>
-          <span>The full Radar fingerprint is not shown here, and ElevenOrbits does not store card details or create its own fingerprint.</span>
-        </div>
-      </div>
-
-      <ClientSecurityDetails {...clientContext} />
-
       {error ? <div className="error-message compact-message" role="alert">{error}</div> : null}
       <button className="button payment-submit" type="submit" disabled={busy}>
         {busy ? "Opening secure checkout…" : "Continue to payment"}
       </button>
-      <div className="secure-note"><span aria-hidden="true">🔒</span> Stripe securely collects your name, email, billing address, and card details.</div>
+      <div className="secure-note"><span aria-hidden="true">🔒</span> Secure checkout by Stripe.</div>
       <p className="footer-note">Your card statement may show ELEVENORBITS.</p>
     </form>
   );

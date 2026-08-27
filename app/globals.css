@@ -423,139 +423,6 @@ h3 {
   margin-top: 11px;
 }
 
-.privacy-notice {
-  display: grid;
-  grid-template-columns: 21px minmax(0, 1fr);
-  gap: 8px;
-  margin-top: 11px;
-  padding: 9px 10px;
-  color: var(--muted);
-  background: #f7f8fc;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  font-size: 0.69rem;
-  line-height: 1.35;
-}
-
-.privacy-notice-icon {
-  display: grid;
-  place-items: center;
-  width: 21px;
-  height: 21px;
-  color: var(--success);
-  background: var(--success-bg);
-  border-radius: 50%;
-  font-size: 0.72rem;
-  font-weight: 900;
-}
-
-.privacy-notice strong {
-  display: block;
-  margin-bottom: 2px;
-  color: var(--ink);
-  font-size: 0.74rem;
-}
-
-.privacy-notice p {
-  margin: 0 0 2px;
-}
-
-.security-details {
-  margin-top: 10px;
-  padding: 0 10px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-}
-
-.security-details summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  min-height: 35px;
-  color: var(--ink);
-  font-size: 0.72rem;
-  font-weight: 750;
-  cursor: pointer;
-  list-style: none;
-}
-
-.security-details summary::-webkit-details-marker {
-  display: none;
-}
-
-.security-details summary::after {
-  content: "⌄";
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-
-.security-details[open] summary::after {
-  content: "⌃";
-}
-
-.security-live-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  margin-right: 5px;
-  background: var(--success);
-  border-radius: 50%;
-  box-shadow: 0 0 0 3px var(--success-bg);
-}
-
-.security-summary-value {
-  overflow: hidden;
-  max-width: 45%;
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.66rem;
-  font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.security-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 7px 12px;
-  padding: 8px 0 9px;
-  border-top: 1px solid var(--line);
-}
-
-.security-grid div {
-  min-width: 0;
-}
-
-.security-grid span,
-.security-grid strong {
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.security-grid span {
-  color: var(--muted);
-  font-size: 0.62rem;
-}
-
-.security-grid strong {
-  margin-top: 1px;
-  color: var(--ink);
-  font-size: 0.69rem;
-}
-
-.security-details-note {
-  margin: 0;
-  padding: 8px 0 10px;
-  color: var(--muted);
-  border-top: 1px solid var(--line);
-  font-size: 0.64rem;
-  line-height: 1.35;
-}
-
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -958,10 +825,6 @@ h3 {
     width: min(460px, 100%);
   }
 
-  .public-payment-card .privacy-notice {
-    font-size: 0.68rem;
-  }
-
   .summary-grid {
     grid-template-columns: repeat(4, minmax(115px, 1fr));
     overflow-x: auto;
@@ -970,7 +833,19 @@ h3 {
 
 @media (max-width: 620px) {
   .topbar {
-    padding: 16px 18px;
+    padding: 10px 14px;
+  }
+
+  .topbar-nav {
+    gap: 8px;
+  }
+
+  .topbar-nav > span {
+    display: none;
+  }
+
+  .brand-logo {
+    height: 32px;
   }
 
   .topbar-nav a:not(.button) {
@@ -983,7 +858,8 @@ h3 {
   }
 
   .portal-content {
-    padding-top: 18px;
+    height: calc(100dvh - 55px);
+    padding-top: 10px;
   }
 
   .portal-hero h1 {
@@ -1025,12 +901,17 @@ h3 {
     padding: 18px;
   }
 
-  .amount-options {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .public-payment-card .secure-note {
+    font-size: 0.7rem;
   }
 
-  .security-grid {
-    gap: 7px 9px;
+  .public-payment-card .footer-note {
+    margin-top: 10px;
+    font-size: 0.7rem;
+  }
+
+  .amount-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .summary-grid {

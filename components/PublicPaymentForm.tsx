@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { formatInterval, formatUsd, parseAmountToCents } from "@/lib/amount";
+import ClientSecurityDetails from "@/components/ClientSecurityDetails";
 import {
   PUBLIC_PAYMENT_MAX_CENTS,
   PUBLIC_PAYMENT_MIN_CENTS,
@@ -11,7 +12,14 @@ import {
   type PublicPaymentMode,
 } from "@/lib/public-payment";
 
-export default function PublicPaymentForm() {
+type PublicPaymentFormProps = {
+  clientContext: {
+    ipAddress: string;
+    location: string;
+  };
+};
+
+export default function PublicPaymentForm({ clientContext }: PublicPaymentFormProps) {
   const [mode, setMode] = useState<PublicPaymentMode>("one_time");
   const [selectedAmount, setSelectedAmount] = useState(String(PUBLIC_PAYMENT_PRESETS[0].amountCents));
   const [customAmount, setCustomAmount] = useState("");
@@ -182,6 +190,8 @@ export default function PublicPaymentForm() {
           <span>The full Radar fingerprint is not shown here, and ElevenOrbits does not store card details or create its own fingerprint.</span>
         </div>
       </div>
+
+      <ClientSecurityDetails {...clientContext} />
 
       {error ? <div className="error-message compact-message" role="alert">{error}</div> : null}
       <button className="button payment-submit" type="submit" disabled={busy}>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getPortalSession } from "@/lib/auth";
 import PublicPaymentForm from "@/components/PublicPaymentForm";
@@ -6,6 +7,23 @@ import PublicPaymentForm from "@/components/PublicPaymentForm";
 export default async function HomePage() {
   const session = await getPortalSession();
   if (!session) redirect("/login");
+
+  const requestHeaders = await headers();
+  const forwardedIp = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const ipAddress = forwardedIp || requestHeaders.get("x-real-ip") || "Unavailable";
+  const decodeHeader = (value: string | null) => {
+    if (!value) return "";
+    try {
+      return decodeURIComponent(value);
+    } catch {
+      return value;
+    }
+  };
+  const location = [
+    decodeHeader(requestHeaders.get("x-vercel-ip-city")),
+    decodeHeader(requestHeaders.get("x-vercel-ip-country-region")),
+    decodeHeader(requestHeaders.get("x-vercel-ip-country")),
+  ].filter(Boolean).join(", ") || "Unavailable on this page";
 
   return (
     <div className="page-shell">
@@ -37,7 +55,7 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <PublicPaymentForm />
+          <PublicPaymentForm clientContext={{ ipAddress, location }} />
         </section>
       </main>
     </div>

@@ -53,7 +53,7 @@ In the ElevenOrbits Stripe Dashboard:
 - Enable Smart Retries and appropriate failed-payment emails.
 - Use test mode first, including successful payments, declines, and 3DS.
 
-Checkout Sessions also apply ElevenOrbits display name, colors, font, rounded controls, and an optional logo URL. For live Checkout logos, set `ELEVENORBITS_LOGO_URL` to `https://merchant.elevenorbits.com/elevenorbits-logo.webp` after the custom domain is connected. The portal uses the complete transparent horizontal logo directly on its white header.
+Checkout Sessions also apply ElevenOrbits display name, colors, font, rounded controls, and an optional logo URL. For live Checkout logos, set `ELEVENORBITS_LOGO_URL` to `https://merchant.elevenorbits.com/elevenorbits-logo.png` after the custom domain is connected. The portal uses the complete transparent horizontal logo directly on its white header.
 
 The static statement descriptor and receipt/invoice business identity are account-level Stripe settings. They are intentionally not changed by customer requests: configure them in Stripe Dashboard so Stripe can validate them against your verified business or DBA name.
 

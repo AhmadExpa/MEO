@@ -29,7 +29,7 @@ export default async function HomePage() {
     <div className="page-shell">
       <header className="topbar">
         <Link className="brand-lockup" href="/" aria-label="ElevenOrbits home">
-          <img className="brand-logo" src="/elevenorbits-logo.webp" alt="ElevenOrbits" />
+          <img className="brand-logo" src="/elevenorbits-logo.png" alt="ElevenOrbits" />
         </Link>
         <nav className="topbar-nav">
           <span>Client payment portal</span>

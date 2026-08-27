@@ -13,7 +13,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <main className="auth-shell">
       <section className="auth-card">
         <Link className="brand-lockup" href="/">
-          <span className="brand-mark">E</span>
+          <span className="brand-mark">
+            <img src="/elevenorbits-logo.png" alt="" aria-hidden="true" />
+          </span>
           ElevenOrbits
         </Link>
         <p className="eyebrow">Private customer portal</p>

@@ -11,7 +11,9 @@ export default async function HomePage() {
     <div className="page-shell">
       <header className="topbar">
         <Link className="brand-lockup" href="/">
-          <span className="brand-mark">E</span>
+          <span className="brand-mark">
+            <img src="/elevenorbits-logo.png" alt="" aria-hidden="true" />
+          </span>
           ElevenOrbits
         </Link>
         <nav className="topbar-nav">

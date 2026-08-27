@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getPortalSession } from "@/lib/auth";
 import { getStripe } from "@/lib/stripe";
 import { isStripeConfigured } from "@/lib/config";
 import { safeFailureMessage, type CustomerResultState } from "@/lib/result";
@@ -68,6 +70,7 @@ async function loadResult(sessionId: string, wasCancelled: boolean): Promise<Res
 }
 
 export default async function PaymentResultPage({ searchParams }: ResultPageProps) {
+  if (!(await getPortalSession())) redirect("/login");
   const params = await searchParams;
   let result: ResultData | null = null;
   try {
@@ -82,7 +85,7 @@ export default async function PaymentResultPage({ searchParams }: ResultPageProp
         <section className="result-card">
           <div className="result-icon error">!</div>
           <h1>We could not verify this payment</h1>
-          <p className="muted">Please return to the original ElevenOrbits payment link or contact us for help.</p>
+          <p className="muted">Please sign in to the ElevenOrbits portal again or contact us for help.</p>
           <Link className="button secondary" href="/">Return to ElevenOrbits</Link>
         </section>
       </main>

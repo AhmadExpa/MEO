@@ -4,27 +4,26 @@ Stateless public payment portal for ElevenOrbits. Customers visit one URL, choos
 
 ## What the app does
 
-- Public customer portal at `/` for one-time or recurring payments.
+- Private customer portal at `/` protected by one shared username and password.
 - Customers choose from presets or enter a bounded custom amount.
 - Recurring checkout creates the Stripe Product/Price for that request; Stripe owns all future billing.
-- Optional legacy payment links remain available through the merchant dashboard API.
 - Customers do not create accounts and never receive Stripe credentials.
 - Stripe-hosted Checkout collects card details, billing address, CVC, and any required 3DS/issuer verification.
 - Stripe Billing owns recurring invoices, charges, retries, payment methods, and subscriptions.
-- The read-only dashboard queries Stripe directly and does not mirror data locally.
+- The portal does not mirror customer or payment data locally.
 
 ## Local setup
 
 1. Install Node.js 20.9 or newer.
 2. Copy `.env.example` to `.env.local`.
-3. Add a Stripe test secret key and long random `PAYMENT_LINK_SECRET`/`AUTH_SECRET` values.
-4. Generate a merchant password hash:
+3. Add a Stripe test secret key and a long random `AUTH_SECRET` value.
+4. Choose the fixed client username and generate its password hash:
 
    ```bash
    npm run hash-password -- "replace-with-a-strong-password"
    ```
 
-5. Put the printed value in `MERCHANT_PASSWORD_HASH`.
+5. Put the username in `PORTAL_USERNAME` and the printed value in `PORTAL_PASSWORD_HASH`.
 6. Install and run:
 
    ```bash
@@ -32,7 +31,7 @@ Stateless public payment portal for ElevenOrbits. Customers visit one URL, choos
    npm run dev
    ```
 
-Open http://localhost:3000/ for the customer portal or http://localhost:3000/login for the merchant dashboard.
+Open http://localhost:3000/. Customers first sign in at `/login`, then the payment portal opens.
 
 ## Customer payment flow
 
@@ -41,7 +40,7 @@ Open http://localhost:3000/ for the customer portal or http://localhost:3000/log
 3. Stripe-hosted Checkout collects their details and handles card verification.
 4. The result page shows whether the payment succeeded, failed, was cancelled, or needs more verification.
 
-No payment link needs to be created or sent for the normal customer flow.
+No payment link or merchant dashboard is used for the customer flow.
 
 ## Stripe configuration before live mode
 

@@ -1,7 +1,12 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getPortalSession } from "@/lib/auth";
 import PublicPaymentForm from "@/components/PublicPaymentForm";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const session = await getPortalSession();
+  if (!session) redirect("/login");
+
   return (
     <div className="page-shell">
       <header className="topbar">
@@ -10,7 +15,8 @@ export default function HomePage() {
           ElevenOrbits
         </Link>
         <nav className="topbar-nav">
-          <Link href="/login">Merchant login</Link>
+          <span>Client payment portal</span>
+          <form action="/api/auth/logout" method="post"><button className="button secondary" type="submit">Sign out</button></form>
         </nav>
       </header>
 
@@ -21,7 +27,7 @@ export default function HomePage() {
             <h1>Pay securely in one place.</h1>
             <p className="lead">
               Choose a one-time payment or a recurring plan, select an amount, and continue to
-              Stripe’s secure Checkout. You do not need an account or a payment link.
+              Stripe’s secure Checkout. Sign in once with the access details supplied by ElevenOrbits.
             </p>
             <div className="fake-row" style={{ maxWidth: 520, marginTop: 26 }}>
               <span className="muted">Card and bank verification</span>
@@ -61,7 +67,7 @@ export default function HomePage() {
               <p className="muted small">Branding and statement descriptor are configured from your Stripe account.</p>
             </article>
           </div>
-          <p className="footer-note">Need to review activity? <Link href="/login" style={{ color: "var(--brand)" }}>Open the merchant dashboard.</Link></p>
+          <p className="footer-note">Need help? Contact ElevenOrbits before retrying a declined payment.</p>
         </section>
       </main>
     </div>

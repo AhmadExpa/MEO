@@ -14,14 +14,6 @@ export function getStripeSecretKey(): string {
   return value;
 }
 
-export function getPaymentLinkSecret(): string {
-  const value = process.env.PAYMENT_LINK_SECRET;
-  if (!value || value.length < 32) {
-    throw new Error("PAYMENT_LINK_SECRET must be at least 32 characters.");
-  }
-  return value;
-}
-
 export function getAuthSecret(): string {
   const value = process.env.AUTH_SECRET;
   if (!value || value.length < 32) {
@@ -30,18 +22,18 @@ export function getAuthSecret(): string {
   return value;
 }
 
-export function getMerchantEmail(): string {
-  const value = process.env.MERCHANT_EMAIL;
+export function getPortalUsername(): string {
+  const value = process.env.PORTAL_USERNAME;
   if (!value) {
-    throw new Error("MERCHANT_EMAIL is not configured.");
+    throw new Error("PORTAL_USERNAME is not configured.");
   }
-  return value.trim().toLowerCase();
+  return value.trim();
 }
 
-export function getMerchantPasswordHash(): string {
-  const value = process.env.MERCHANT_PASSWORD_HASH;
+export function getPortalPasswordHash(): string {
+  const value = process.env.PORTAL_PASSWORD_HASH;
   if (!value) {
-    throw new Error("MERCHANT_PASSWORD_HASH is not configured.");
+    throw new Error("PORTAL_PASSWORD_HASH is not configured.");
   }
   return value;
 }

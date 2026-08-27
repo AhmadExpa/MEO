@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { clearMerchantSession } from "@/lib/auth";
+import { clearPortalSession } from "@/lib/auth";
 
 export async function POST(request: Request) {
-  await clearMerchantSession();
+  await clearPortalSession();
   return NextResponse.redirect(new URL("/login", request.url));
 }

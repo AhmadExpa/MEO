@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { authenticateMerchant, setMerchantSession } from "@/lib/auth";
+import { authenticatePortal, setPortalSession } from "@/lib/auth";
 import { allowRateLimitedRequest } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
   const formData = await request.formData();
-  const email = String(formData.get("email") || "");
+  const username = String(formData.get("username") || "");
   const password = String(formData.get("password") || "");
   const forwardedFor = request.headers.get("x-forwarded-for") || "unknown";
   const clientKey = forwardedFor.split(",")[0].trim();
@@ -14,11 +14,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    if (!authenticateMerchant(email, password)) {
+    if (!authenticatePortal(username, password)) {
       return NextResponse.redirect(new URL("/login?error=1", request.url));
     }
-    await setMerchantSession(email.trim().toLowerCase());
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    await setPortalSession(username.trim());
+    return NextResponse.redirect(new URL("/", request.url));
   } catch {
     return NextResponse.redirect(new URL("/login?error=1", request.url));
   }

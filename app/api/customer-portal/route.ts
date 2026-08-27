@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
+import { getPortalSession } from "@/lib/auth";
 import { getAppUrl } from "@/lib/config";
 import { getStripe } from "@/lib/stripe";
 
 export async function POST(request: Request) {
+  if (!(await getPortalSession())) {
+    return NextResponse.json({ error: "Portal login required." }, { status: 401 });
+  }
+
   try {
     const body = (await request.json()) as { sessionId?: string };
     const sessionId = String(body.sessionId || "");

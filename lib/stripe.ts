@@ -1,6 +1,5 @@
 import Stripe from "stripe";
 import { getAppUrl, getStripeSecretKey } from "@/lib/config";
-import type { PaymentLinkConfig } from "@/lib/types";
 import type { PublicPaymentInterval, PublicPaymentMode } from "@/lib/public-payment";
 
 let client: Stripe | undefined;
@@ -35,15 +34,6 @@ export function checkoutBranding(): Stripe.Checkout.SessionCreateParams.Branding
   }
 
   return branding;
-}
-
-export function paymentMetadata(config: PaymentLinkConfig, mode: "payment" | "subscription") {
-  return {
-    elevenorbits: "true",
-    payment_link_reference: config.reference,
-    payment_type: mode,
-    merchant_name: "ElevenOrbits",
-  };
 }
 
 export function publicPaymentMetadata(

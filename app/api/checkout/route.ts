@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getPortalSession } from "@/lib/auth";
 import { allowRateLimitedRequest } from "@/lib/rate-limit";
 import { isStripeConfigured } from "@/lib/config";
 import { checkoutBranding, checkoutUrls, getStripe, publicPaymentMetadata } from "@/lib/stripe";
@@ -17,6 +18,10 @@ function validAttemptId(value: unknown): value is string {
 }
 
 export async function POST(request: Request) {
+  if (!(await getPortalSession())) {
+    return NextResponse.json({ error: "Portal login required." }, { status: 401 });
+  }
+
   if (!isStripeConfigured()) {
     return NextResponse.json({ error: "Payments are not configured yet." }, { status: 503 });
   }

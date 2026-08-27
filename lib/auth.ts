@@ -2,11 +2,11 @@ import { cookies } from "next/headers";
 import { createHmac, scryptSync, timingSafeEqual } from "node:crypto";
 import {
   getAuthSecret,
-  getMerchantEmail,
-  getMerchantPasswordHash,
+  getPortalPasswordHash,
+  getPortalUsername,
 } from "@/lib/config";
 
-const cookieName = "elevenorbits_merchant_session";
+const cookieName = "elevenorbits_portal_session";
 const sessionLifetimeSeconds = 60 * 60 * 12;
 
 function encode(value: string): string {
@@ -34,24 +34,24 @@ function verifyPassword(password: string, storedHash: string): boolean {
   }
 }
 
-export function authenticateMerchant(email: string, password: string): boolean {
+export function authenticatePortal(username: string, password: string): boolean {
   return (
-    email.trim().toLowerCase() === getMerchantEmail() &&
-    verifyPassword(password, getMerchantPasswordHash())
+    username.trim() === getPortalUsername() &&
+    verifyPassword(password, getPortalPasswordHash())
   );
 }
 
-export function createSessionToken(email: string): string {
+export function createSessionToken(username: string): string {
   const payload = encode(
     JSON.stringify({
-      email,
+      username,
       expiresAt: Date.now() + sessionLifetimeSeconds * 1000,
     }),
   );
   return `${payload}.${signature(payload)}`;
 }
 
-function verifySessionToken(token: string): { email: string } | null {
+function verifySessionToken(token: string): { username: string } | null {
   try {
     const [payload, providedSignature] = token.split(".");
     if (!payload || !providedSignature) return null;
@@ -66,24 +66,24 @@ function verifySessionToken(token: string): { email: string } | null {
       return null;
     }
 
-    const data = JSON.parse(decode(payload)) as { email?: string; expiresAt?: number };
-    if (!data.email || !data.expiresAt || data.expiresAt <= Date.now()) return null;
-    if (data.email.toLowerCase() !== getMerchantEmail()) return null;
-    return { email: data.email };
+    const data = JSON.parse(decode(payload)) as { username?: string; expiresAt?: number };
+    if (!data.username || !data.expiresAt || data.expiresAt <= Date.now()) return null;
+    if (data.username !== getPortalUsername()) return null;
+    return { username: data.username };
   } catch {
     return null;
   }
 }
 
-export async function getMerchantSession(): Promise<{ email: string } | null> {
+export async function getPortalSession(): Promise<{ username: string } | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get(cookieName)?.value;
   return token ? verifySessionToken(token) : null;
 }
 
-export async function setMerchantSession(email: string): Promise<void> {
+export async function setPortalSession(username: string): Promise<void> {
   const cookieStore = await cookies();
-  cookieStore.set(cookieName, createSessionToken(email), {
+  cookieStore.set(cookieName, createSessionToken(username), {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -92,7 +92,7 @@ export async function setMerchantSession(email: string): Promise<void> {
   });
 }
 
-export async function clearMerchantSession(): Promise<void> {
+export async function clearPortalSession(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete(cookieName);
 }

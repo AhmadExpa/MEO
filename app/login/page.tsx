@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getPortalSession } from "@/lib/auth";
 
 type LoginPageProps = {
   searchParams: Promise<{ error?: string }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
+  if (await getPortalSession()) redirect("/");
   const params = await searchParams;
   return (
     <main className="auth-shell">
@@ -13,9 +16,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           <span className="brand-mark">E</span>
           ElevenOrbits
         </Link>
-        <p className="eyebrow">Merchant area</p>
-        <h1 style={{ fontSize: "2.5rem" }}>Review your payments.</h1>
-        <p className="muted">Customers pay from the public portal. Sign in here only to review Stripe activity.</p>
+        <p className="eyebrow">Private customer portal</p>
+        <h1 style={{ fontSize: "2.5rem" }}>Enter your access details.</h1>
+        <p className="muted">Use the username and password supplied by ElevenOrbits to continue to payment.</p>
 
         {params.error ? (
           <div className="error-message" style={{ marginBottom: 16 }}>
@@ -25,8 +28,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
         <form className="auth-form" action="/api/auth/login" method="post">
           <div className="field">
-            <label htmlFor="email">Merchant email</label>
-            <input id="email" name="email" type="email" autoComplete="email" required />
+            <label htmlFor="username">Username</label>
+            <input id="username" name="username" type="text" autoComplete="username" required />
           </div>
           <div className="field">
             <label htmlFor="password">Password</label>
@@ -34,7 +37,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </div>
           <button className="button" type="submit">Sign in</button>
         </form>
-        <p className="footer-note">Customers should never receive these merchant credentials.</p>
+        <p className="footer-note">This portal is private. Do not share your access details publicly.</p>
       </section>
     </main>
   );

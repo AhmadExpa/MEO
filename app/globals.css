@@ -97,12 +97,24 @@ button {
   padding: 52px 0 80px;
 }
 
+.portal-content {
+  height: calc(100dvh - 75px);
+  padding: 22px 0;
+  overflow: hidden;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
   align-items: center;
   gap: 52px;
   padding: 46px 0 80px;
+}
+
+.portal-hero {
+  height: 100%;
+  padding: 0;
+  gap: 42px;
 }
 
 .eyebrow {
@@ -129,6 +141,12 @@ h1 {
   letter-spacing: -0.065em;
 }
 
+.portal-hero h1 {
+  max-width: 600px;
+  margin-bottom: 14px;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+}
+
 h2 {
   margin-bottom: 8px;
   font-size: 1.35rem;
@@ -143,8 +161,14 @@ h3 {
 .lead {
   max-width: 650px;
   color: var(--muted);
-  font-size: 1.1rem;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.portal-fact {
+  max-width: 520px;
+  padding: 10px 0;
+  font-size: 0.88rem;
 }
 
 .muted {
@@ -289,6 +313,40 @@ h3 {
 
 .card {
   padding: 24px;
+}
+
+.public-payment-card {
+  padding: 21px;
+}
+
+.public-payment-card .card-header {
+  gap: 10px;
+}
+
+.public-payment-card .eyebrow {
+  margin-bottom: 5px;
+}
+
+.public-payment-card h2 {
+  margin-bottom: 4px;
+}
+
+.public-payment-card .form-grid {
+  gap: 11px;
+}
+
+.public-payment-card .field {
+  gap: 5px;
+}
+
+.public-payment-card .field label {
+  font-size: 0.82rem;
+}
+
+.public-payment-card .field input,
+.public-payment-card .field select {
+  min-height: 40px;
+  padding: 8px 10px;
 }
 
 .form-grid {
@@ -595,13 +653,13 @@ h3 {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin: 23px 0 17px;
-  padding-top: 20px;
+  margin: 14px 0 12px;
+  padding-top: 13px;
   border-top: 1px solid var(--line);
 }
 
 .payment-total strong {
-  font-size: 1.7rem;
+  font-size: 1.45rem;
   letter-spacing: -0.04em;
 }
 
@@ -609,7 +667,7 @@ h3 {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: 11px;
   color: var(--muted);
   font-size: 0.78rem;
 }
@@ -652,7 +710,7 @@ h3 {
 }
 
 .footer-note {
-  margin-top: 28px;
+  margin-top: 14px;
   color: var(--muted);
   font-size: 0.8rem;
   line-height: 1.5;
@@ -664,6 +722,17 @@ h3 {
     grid-template-columns: 1fr;
     gap: 28px;
     padding-top: 20px;
+  }
+
+  .portal-content {
+    height: auto;
+    min-height: calc(100dvh - 65px);
+    overflow: visible;
+  }
+
+  .portal-hero {
+    gap: 22px;
+    padding: 0;
   }
 
   .summary-grid {
@@ -686,6 +755,23 @@ h3 {
     padding-top: 30px;
   }
 
+  .portal-content {
+    padding-top: 18px;
+  }
+
+  .portal-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .portal-fact {
+    padding: 8px 0;
+    font-size: 0.8rem;
+  }
+
+  .portal-hero .portal-fact {
+    display: none;
+  }
+
   .form-grid,
   .plan-row {
     grid-template-columns: 1fr;
@@ -700,6 +786,10 @@ h3 {
   .result-card,
   .auth-card {
     padding: 23px;
+  }
+
+  .public-payment-card {
+    padding: 18px;
   }
 
   .summary-grid {

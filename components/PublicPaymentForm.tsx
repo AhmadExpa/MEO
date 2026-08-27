@@ -75,8 +75,8 @@ export default function PublicPaymentForm() {
         <span className="pill">USD · Secure</span>
       </div>
 
-      <div className="form-grid" style={{ marginTop: 23 }}>
-        <div className="field full">
+      <div className="form-grid public-payment-fields">
+        <div className="field">
           <label htmlFor="public-payment-mode">Payment type</label>
           <select
             id="public-payment-mode"
@@ -89,7 +89,7 @@ export default function PublicPaymentForm() {
         </div>
 
         {mode === "recurring" ? (
-          <div className="field full">
+          <div className="field">
             <label htmlFor="public-payment-interval">Billing frequency</label>
             <select
               id="public-payment-interval"
@@ -103,7 +103,7 @@ export default function PublicPaymentForm() {
           </div>
         ) : null}
 
-        <div className="field full">
+        <div className="field public-payment-amount">
           <label htmlFor="public-payment-amount">Amount</label>
           <select id="public-payment-amount" value={selectedAmount} onChange={(event) => setSelectedAmount(event.target.value)}>
             {PUBLIC_PAYMENT_PRESETS.map((preset) => (

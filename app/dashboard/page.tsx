@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getMerchantSession } from "@/lib/auth";
 import { isStripeConfigured } from "@/lib/config";
 import { getStripeSummary, listStripeCharges } from "@/lib/stripe-data";
-import PaymentRequestForm from "@/components/PaymentRequestForm";
 import StripeActivity from "@/components/StripeActivity";
 
 export const dynamic = "force-dynamic";
@@ -42,20 +41,19 @@ export default async function DashboardPage() {
         <div className="section-header">
           <div>
             <p className="eyebrow">Merchant dashboard</p>
-            <h1 style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)" }}>Charge customers cleanly.</h1>
-            <p className="lead" style={{ fontSize: "1rem" }}>Create a short link, share it with your customer, and let Stripe handle the secure payment and recurring billing.</p>
+            <h1 style={{ fontSize: "clamp(2.2rem, 5vw, 3.6rem)" }}>Monitor customer payments.</h1>
+            <p className="lead" style={{ fontSize: "1rem" }}>Customers pay from the public portal. Use this page to review activity while Stripe handles checkout and recurring billing.</p>
           </div>
-          <span className="pill">Stripe is the source of truth</span>
+          <div className="button-row">
+            <Link className="button secondary" href="/">Open customer portal</Link>
+            <span className="pill">Stripe is the source of truth</span>
+          </div>
         </div>
 
         {!stripeReady ? (
           <div className="error-message section">Add STRIPE_SECRET_KEY to `.env.local` before creating live or test payment links.</div>
         ) : null}
         {stripeError ? <div className="error-message section">{stripeError}</div> : null}
-
-        <section className="section">
-          <PaymentRequestForm />
-        </section>
 
         {summary && activity ? (
           <StripeActivity

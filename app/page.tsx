@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PublicPaymentForm from "@/components/PublicPaymentForm";
 
 export default function HomePage() {
   return (
@@ -16,54 +17,36 @@ export default function HomePage() {
       <main className="main-content">
         <section className="hero">
           <div>
-            <p className="eyebrow">Secure customer payments</p>
-            <h1>Payments that feel familiar and safe.</h1>
+            <p className="eyebrow">ElevenOrbits customer portal</p>
+            <h1>Pay securely in one place.</h1>
             <p className="lead">
-              ElevenOrbits gives customers a short payment link that opens Stripe-hosted Checkout.
-              Customers never need your Stripe login, and recurring billing stays inside Stripe.
+              Choose a one-time payment or a recurring plan, select an amount, and continue to
+              Stripe’s secure Checkout. You do not need an account or a payment link.
             </p>
-            <div className="button-row" style={{ marginTop: 26 }}>
-              <Link className="button" href="/login">Open merchant dashboard</Link>
+            <div className="fake-row" style={{ maxWidth: 520, marginTop: 26 }}>
+              <span className="muted">Card and bank verification</span>
+              <strong>Handled by Stripe</strong>
+            </div>
+            <div className="fake-row" style={{ maxWidth: 520 }}>
+              <span className="muted">Recurring billing</span>
+              <strong>Managed by Stripe</strong>
             </div>
           </div>
 
-          <div className="hero-card">
-            <div className="hero-card-header">
-              <div>
-                <p className="eyebrow" style={{ marginBottom: 5 }}>Stripe-hosted</p>
-                <h2 style={{ marginBottom: 0 }}>ElevenOrbits payment</h2>
-              </div>
-              <span className="status-pill paid">Secure</span>
-            </div>
-            <div className="fake-row">
-              <span className="muted">One-time service</span>
-              <strong>US$199.00</strong>
-            </div>
-            <div className="fake-row">
-              <span className="muted">Customer details</span>
-              <strong>Collected by Stripe</strong>
-            </div>
-            <div className="fake-row">
-              <span className="muted">Bank verification</span>
-              <strong>Only when needed</strong>
-            </div>
-            <p className="footer-note" style={{ marginBottom: 0 }}>
-              Your card statement may show ELEVENORBITS.
-            </p>
-          </div>
+          <PublicPaymentForm />
         </section>
 
         <section className="section">
           <div className="section-header">
             <div>
-              <p className="eyebrow">Built for a clean handoff</p>
-              <h2>Stripe remains the source of truth</h2>
+              <p className="eyebrow">Simple by design</p>
+              <h2>Everything important stays with Stripe</h2>
             </div>
           </div>
           <div className="form-grid">
             <article className="card">
               <h3>One-time or recurring</h3>
-              <p className="muted small">Each link is clearly configured so customers do not accidentally subscribe.</p>
+              <p className="muted small">Choose the payment type before Checkout so you know exactly what will happen.</p>
             </article>
             <article className="card">
               <h3>No card data stored here</h3>
@@ -78,6 +61,7 @@ export default function HomePage() {
               <p className="muted small">Branding and statement descriptor are configured from your Stripe account.</p>
             </article>
           </div>
+          <p className="footer-note">Need to review activity? <Link href="/login" style={{ color: "var(--brand)" }}>Open the merchant dashboard.</Link></p>
         </section>
       </main>
     </div>

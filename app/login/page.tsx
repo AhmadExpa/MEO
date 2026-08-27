@@ -14,8 +14,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           ElevenOrbits
         </Link>
         <p className="eyebrow">Merchant area</p>
-        <h1 style={{ fontSize: "2.5rem" }}>Create a payment link.</h1>
-        <p className="muted">Only you sign in here. Customers receive a payment link and do not need an account.</p>
+        <h1 style={{ fontSize: "2.5rem" }}>Review your payments.</h1>
+        <p className="muted">Customers pay from the public portal. Sign in here only to review Stripe activity.</p>
 
         {params.error ? (
           <div className="error-message" style={{ marginBottom: 16 }}>

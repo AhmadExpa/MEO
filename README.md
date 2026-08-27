@@ -1,12 +1,13 @@
 # ElevenOrbits Checkout
 
-Stateless payment-link application for ElevenOrbits. Stripe is the source of truth: the app does not use a customer/payment database and does not run recurring billing jobs.
+Stateless public payment portal for ElevenOrbits. Customers visit one URL, choose a one-time or recurring amount, and continue to Stripe-hosted Checkout. Stripe is the source of truth: the app does not use a customer/payment database and does not run recurring billing jobs.
 
 ## What the app does
 
-- Merchant-only dashboard for creating one-time or recurring payment links.
-- One-time links support approved presets and an optional bounded custom amount.
-- Recurring links use fixed Stripe Prices.
+- Public customer portal at `/` for one-time or recurring payments.
+- Customers choose from presets or enter a bounded custom amount.
+- Recurring checkout creates the Stripe Product/Price for that request; Stripe owns all future billing.
+- Optional legacy payment links remain available through the merchant dashboard API.
 - Customers do not create accounts and never receive Stripe credentials.
 - Stripe-hosted Checkout collects card details, billing address, CVC, and any required 3DS/issuer verification.
 - Stripe Billing owns recurring invoices, charges, retries, payment methods, and subscriptions.
@@ -31,7 +32,16 @@ Stateless payment-link application for ElevenOrbits. Stripe is the source of tru
    npm run dev
    ```
 
-Open http://localhost:3000/login.
+Open http://localhost:3000/ for the customer portal or http://localhost:3000/login for the merchant dashboard.
+
+## Customer payment flow
+
+1. Send customers the public portal URL.
+2. They choose one-time or recurring, select an amount, and continue.
+3. Stripe-hosted Checkout collects their details and handles card verification.
+4. The result page shows whether the payment succeeded, failed, was cancelled, or needs more verification.
+
+No payment link needs to be created or sent for the normal customer flow.
 
 ## Stripe configuration before live mode
 

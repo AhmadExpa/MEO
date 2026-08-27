@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { getAppUrl, getStripeSecretKey } from "@/lib/config";
 import type { PaymentLinkConfig } from "@/lib/types";
+import type { PublicPaymentInterval, PublicPaymentMode } from "@/lib/public-payment";
 
 let client: Stripe | undefined;
 
@@ -42,5 +43,20 @@ export function paymentMetadata(config: PaymentLinkConfig, mode: "payment" | "su
     payment_link_reference: config.reference,
     payment_type: mode,
     merchant_name: "ElevenOrbits",
+  };
+}
+
+export function publicPaymentMetadata(
+  mode: PublicPaymentMode,
+  amountCents: number,
+  interval?: PublicPaymentInterval,
+) {
+  return {
+    elevenorbits: "true",
+    merchant_name: "ElevenOrbits",
+    payment_source: "public_portal",
+    payment_type: mode === "one_time" ? "payment" : "subscription",
+    amount_cents: String(amountCents),
+    ...(interval ? { billing_interval: interval } : {}),
   };
 }

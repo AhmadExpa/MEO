@@ -10,11 +10,8 @@ export default async function HomePage() {
   return (
     <div className="page-shell">
       <header className="topbar">
-        <Link className="brand-lockup" href="/">
-          <span className="brand-mark">
-            <img src="/elevenorbits-logo.png" alt="" aria-hidden="true" />
-          </span>
-          ElevenOrbits
+        <Link className="brand-lockup" href="/" aria-label="ElevenOrbits home">
+          <img className="brand-logo" src="/elevenorbits-logo.webp" alt="ElevenOrbits" />
         </Link>
         <nav className="topbar-nav">
           <span>Client payment portal</span>

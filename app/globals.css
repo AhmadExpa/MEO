@@ -725,14 +725,25 @@ h3 {
   }
 
   .portal-content {
-    height: auto;
-    min-height: calc(100dvh - 65px);
-    overflow: visible;
+    height: calc(100dvh - 65px);
+    min-height: 0;
+    padding: 16px 0;
+    overflow: hidden;
   }
 
   .portal-hero {
-    gap: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 0;
     padding: 0;
+  }
+
+  .portal-hero > div:first-child {
+    display: none;
+  }
+
+  .public-payment-card {
+    width: min(460px, 100%);
   }
 
   .summary-grid {

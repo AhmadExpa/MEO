@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getPortalSession } from "@/lib/auth";
+import ClientSecurityPanel from "@/components/ClientSecurityPanel";
 import PublicPaymentForm from "@/components/PublicPaymentForm";
 
 export default async function HomePage() {
@@ -37,7 +38,10 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <PublicPaymentForm />
+          <div className="portal-payment-column">
+            <PublicPaymentForm />
+            <ClientSecurityPanel />
+          </div>
         </section>
       </main>
     </div>

@@ -47,14 +47,14 @@ async function loadResult(sessionId: string, wasCancelled: boolean): Promise<Res
     state = "requires_action";
     title = "Security verification required";
     message = "Your bank requires an additional security step. Return to checkout and complete the verification prompt.";
-  } else if (failureCode || session.payment_status === "unpaid") {
-    state = "failed";
-    title = "Payment was not approved";
-    message = safeFailureMessage(failureCode);
   } else if (wasCancelled || session.status === "expired") {
     state = "cancelled";
     title = "Payment cancelled";
     message = "The payment was cancelled or the Checkout session expired. No completed charge was recorded for this attempt.";
+  } else if (failureCode || session.payment_status === "unpaid") {
+    state = "failed";
+    title = "Payment was not approved";
+    message = safeFailureMessage(failureCode);
   }
 
   const amount = session.amount_total ? new Intl.NumberFormat("en-US", { style: "currency", currency: session.currency?.toUpperCase() || "USD" }).format(session.amount_total / 100) : null;

@@ -75,48 +75,78 @@ export default function PublicPaymentForm() {
         <span className="pill">USD · Secure</span>
       </div>
 
-      <div className="form-grid public-payment-fields">
-        <div className="field">
-          <label htmlFor="public-payment-mode">Payment type</label>
-          <select
-            id="public-payment-mode"
-            value={mode}
-            onChange={(event) => setMode(event.target.value as PublicPaymentMode)}
-          >
-            <option value="one_time">One-time payment</option>
-            <option value="recurring">Recurring payment</option>
-          </select>
+      <div className="payment-choice-grid">
+        <div className="choice-block">
+          <span className="choice-label">Payment type</span>
+          <div className="choice-options" role="group" aria-label="Payment type">
+            <button
+              className={`choice-button ${mode === "one_time" ? "selected" : ""}`}
+              type="button"
+              aria-pressed={mode === "one_time"}
+              onClick={() => setMode("one_time")}
+            >
+              One-time
+            </button>
+            <button
+              className={`choice-button ${mode === "recurring" ? "selected" : ""}`}
+              type="button"
+              aria-pressed={mode === "recurring"}
+              onClick={() => setMode("recurring")}
+            >
+              Recurring
+            </button>
+          </div>
         </div>
 
         {mode === "recurring" ? (
-          <div className="field">
-            <label htmlFor="public-payment-interval">Billing frequency</label>
-            <select
-              id="public-payment-interval"
-              value={interval}
-              onChange={(event) => setInterval(event.target.value as PublicPaymentInterval)}
-            >
-              <option value="week">Weekly</option>
-              <option value="month">Monthly</option>
-              <option value="year">Yearly</option>
-            </select>
+          <div className="choice-block">
+            <span className="choice-label">Billing frequency</span>
+            <div className="choice-options" role="group" aria-label="Billing frequency">
+              {(["week", "month", "year"] as PublicPaymentInterval[]).map((option) => (
+                <button
+                  className={`choice-button ${interval === option ? "selected" : ""}`}
+                  key={option}
+                  type="button"
+                  aria-pressed={interval === option}
+                  onClick={() => setInterval(option)}
+                >
+                  {option === "week" ? "Weekly" : option === "month" ? "Monthly" : "Yearly"}
+                </button>
+              ))}
+            </div>
           </div>
         ) : null}
 
-        <div className="field public-payment-amount">
-          <label htmlFor="public-payment-amount">Amount</label>
-          <select id="public-payment-amount" value={selectedAmount} onChange={(event) => setSelectedAmount(event.target.value)}>
+        <div className="choice-block amount-block">
+          <div className="choice-heading">
+            <span className="choice-label">Amount</span>
+            <span className="field-hint">{amountHint}</span>
+          </div>
+          <div className="amount-options" role="group" aria-label="Payment amount">
             {PUBLIC_PAYMENT_PRESETS.map((preset) => (
-              <option key={preset.id} value={preset.amountCents}>
+              <button
+                className={`amount-button ${selectedAmount === String(preset.amountCents) ? "selected" : ""}`}
+                key={preset.id}
+                type="button"
+                aria-pressed={selectedAmount === String(preset.amountCents)}
+                onClick={() => setSelectedAmount(String(preset.amountCents))}
+              >
                 {publicPaymentPresetLabel(preset.amountCents)}
-              </option>
+              </button>
             ))}
-            <option value="custom">Enter a custom amount</option>
-          </select>
+            <button
+              className={`amount-button ${selectedAmount === "custom" ? "selected" : ""}`}
+              type="button"
+              aria-pressed={selectedAmount === "custom"}
+              onClick={() => setSelectedAmount("custom")}
+            >
+              Custom
+            </button>
+          </div>
         </div>
 
         {selectedAmount === "custom" ? (
-          <div className="field full">
+          <div className="field custom-amount-field">
             <label htmlFor="public-custom-amount">Custom amount (USD)</label>
             <input
               id="public-custom-amount"
@@ -129,7 +159,6 @@ export default function PublicPaymentForm() {
               step="0.01"
               required
             />
-            <span className="field-hint">{amountHint}.</span>
           </div>
         ) : null}
       </div>
@@ -140,13 +169,22 @@ export default function PublicPaymentForm() {
       </div>
 
       {mode === "recurring" ? (
-        <div className="info-message" style={{ marginBottom: 17 }}>
+        <div className="info-message compact-message">
           Stripe will automatically bill this amount {recurringLabel} until the subscription is cancelled.
         </div>
       ) : null}
 
-      {error ? <div className="error-message" style={{ marginBottom: 17 }} role="alert">{error}</div> : null}
-      <button className="button" type="submit" style={{ width: "100%" }} disabled={busy}>
+      <div className="privacy-notice">
+        <div className="privacy-notice-icon" aria-hidden="true">✓</div>
+        <div>
+          <strong>Stripe security check</strong>
+          <p>Stripe may use your IP-derived location, browser/device signals, billing details, card information, and bank authentication to assess this payment.</p>
+          <span>The full Radar fingerprint is not shown here, and ElevenOrbits does not store card details or create its own fingerprint.</span>
+        </div>
+      </div>
+
+      {error ? <div className="error-message compact-message" role="alert">{error}</div> : null}
+      <button className="button payment-submit" type="submit" disabled={busy}>
         {busy ? "Opening secure checkout…" : "Continue to payment"}
       </button>
       <div className="secure-note"><span aria-hidden="true">🔒</span> Stripe securely collects your name, email, billing address, and card details.</div>
